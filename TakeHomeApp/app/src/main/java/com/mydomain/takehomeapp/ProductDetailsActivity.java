@@ -1,6 +1,6 @@
 package com.mydomain.takehomeapp;
 /*
- * Description: Product details activity
+ * Description: Product details activity for detail screen
  * Created by jmonani on 12/21/17.
  */
 

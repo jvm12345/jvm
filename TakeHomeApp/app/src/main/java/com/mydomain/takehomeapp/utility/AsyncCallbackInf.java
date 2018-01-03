@@ -5,10 +5,9 @@ import com.mydomain.takehomeapp.services.apihelper.BaseApiResponse;
 
 /**
  * 
- * async callback interface
+ * async callback interface for handling async callbacks from Retrofit/server
  *
  */
-public interface AsyncCallbackInf
-{
+public interface AsyncCallbackInf {
     void onResponseCallback(int result, BaseApiResponse response);
 }

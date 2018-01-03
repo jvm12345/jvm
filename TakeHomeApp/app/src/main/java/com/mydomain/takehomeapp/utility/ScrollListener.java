@@ -1,6 +1,6 @@
 package com.mydomain.takehomeapp.utility;
 /*
- * Description: Scroll listener
+ * Description: Scroll listener for lazy loading
  * Created by jmonani on 12/21/17.
  *
  */
@@ -24,7 +24,7 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
-        int lastVisibleItemPosition = 0;
+        int lastVisibleItemPosition;
         int totalItemCount = mLayoutManager.getItemCount();
 
         lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
@@ -44,7 +44,7 @@ public abstract class ScrollListener extends RecyclerView.OnScrollListener {
 
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
-            onLoadMore(currentPage, totalItemCount, view);
+            boolean ret = onLoadMore(currentPage, totalItemCount, view);
             loading = true;
         }
     }

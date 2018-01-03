@@ -1,6 +1,6 @@
 package com.mydomain.takehomeapp.services.apihelper;
 /*
- * Description: 
+ * Description: Product details
  * Created by jmonani on 12/21/17.
  */
 

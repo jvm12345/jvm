@@ -1,5 +1,8 @@
 package com.mydomain.takehomeapp.ProductCatalogue;
 
+/*
+ * product list adapter for list of product
+ */
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;

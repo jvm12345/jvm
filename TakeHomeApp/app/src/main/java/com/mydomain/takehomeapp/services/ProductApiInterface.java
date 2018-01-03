@@ -1,6 +1,6 @@
 package com.mydomain.takehomeapp.services;
 /*
- * Description: product api retrofit interface
+ * Description: product api retrofit interface using https://walmartlabs-test.appspot.com/
  * Created by jmonani on 12/21/17.
  */
 
