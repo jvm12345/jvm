@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mydomain.takehomeapp.services.apihelper.ProductDetails;
+import com.squareup.picasso.Picasso;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         TextView priceTV = findViewById(R.id.product_detail_price);
         TextView descriptionTV = findViewById(R.id.product_detail_desc);
         TextView ratingTV = findViewById(R.id.product_detail_rating);
+        ImageView imageView = findViewById(R.id.product_detail_image);
         if(null != productDetails) {
             // retrieve product details to update the ui
             Log.i("ProductDetailsActivity", "Product Details for:" + productDetails.getProductName());
@@ -30,7 +33,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             priceTV.setText(productDetails.getPrice());
             if(null != productDetails.getShortDescription())
                 descriptionTV.setText(Html.fromHtml(productDetails.getShortDescription()));
-            ratingTV.setText("Rating: " + productDetails.getReviewRating());
+            StringBuilder rating = new StringBuilder(getString(R.string.product_detail_rating_label));
+            rating.append(" :");
+            ratingTV.setText(rating.toString() + productDetails.getReviewRating());
+            Picasso.with(this).load(productDetails.productImage).into(imageView);
         }
     }
 }

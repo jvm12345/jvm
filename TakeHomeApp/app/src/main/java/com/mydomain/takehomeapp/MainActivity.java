@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int SUCCESS_RESPONSE = 200;
     private RecyclerView mProductListRecyclerView;
     private ProductListAdapter mProductListAdapter;
-    private ScrollListener mScrollListener;
     private TextView mEmptyListMessage;
 
     @Override
@@ -47,24 +46,24 @@ public class MainActivity extends AppCompatActivity {
         mProductListAdapter = new ProductListAdapter((ArrayList<ProductDetails>)mProductDetailsList, this);
         mProductListRecyclerView.setAdapter(mProductListAdapter);
 
-        mScrollListener = new ScrollListener(layoutManager) {
+        ScrollListener mScrollListener = new ScrollListener(layoutManager) {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount, RecyclerView recyclerView) {
-                if(mProductListRecyclerView.canScrollVertically(SCROLL_DOWN)) {
-                    ProductDetails product = mProductDetailsList.get(mProductDetailsList.size()-1);
-                    fetchProductList(product.getPageNumber()+1);
+                if (mProductListRecyclerView.canScrollVertically(SCROLL_DOWN)) {
+                    ProductDetails product = mProductDetailsList.get(mProductDetailsList.size() - 1);
+                    fetchProductList(product.getPageNumber() + 1);
                 }
                 return true;
             }
         };
         mScrollListener.resetState();
         mProductListRecyclerView.setOnScrollListener(mScrollListener);
+        if(mProductDetailsList.size() <= 0)
+            fetchProductList(1);
     }
 
     public void onResume() {
         super.onResume();
-        if(mProductDetailsList.size() <= 0)
-            fetchProductList(1);
     }
 
 

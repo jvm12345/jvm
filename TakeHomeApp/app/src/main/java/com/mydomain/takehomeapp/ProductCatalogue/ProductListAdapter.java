@@ -9,48 +9,52 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mydomain.takehomeapp.MainActivity;
 import com.mydomain.takehomeapp.ProductDetailsActivity;
 import com.mydomain.takehomeapp.R;
 import com.mydomain.takehomeapp.services.apihelper.ProductDetails;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.MyViewHolder> {
 
     private ArrayList<ProductDetails> mProductDetdailsDataSet;
-    private MainActivity mAactivity;
+    private MainActivity mActivity;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productName;
-        TextView productPrice;
+        private TextView productName;
+        private TextView productPrice;
+        private ImageView productThumbImage;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
-            this.productName = (TextView) itemView.findViewById(R.id.product_name);
-            this.productPrice = (TextView) itemView.findViewById(R.id.product_price);
-            if(null != itemView) {
+            this.productName = itemView.findViewById(R.id.product_name);
+            this.productPrice = itemView.findViewById(R.id.product_price);
+            this.productThumbImage = itemView.findViewById(R.id.product_list_thumb_image);
+            //if(null != itemView) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         int index = getAdapterPosition();
                         Log.i("ProductAdapter", "Selected Product: " + mProductDetdailsDataSet.get(index).getProductName());
                         ProductDetails details = mProductDetdailsDataSet.get(index);
-                        Intent intent = new Intent(mAactivity, ProductDetailsActivity.class);
+                        Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
                         intent.putExtra("extra_product_details", details);
-                        mAactivity.startActivity(intent);
+                        mActivity.startActivity(intent);
                     }
                 });
-            }
+           // }
         }
     }
 
     public ProductListAdapter(ArrayList<ProductDetails> data, MainActivity activity) {
         this.mProductDetdailsDataSet = data;
-        mAactivity = activity;
+        mActivity = activity;
     }
 
     public void setData(ArrayList<ProductDetails> data) {
@@ -62,8 +66,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         View productCardView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.product_cards_layout, parent, false);
 
-        MyViewHolder myViewHolder = new MyViewHolder(productCardView);
-        return myViewHolder;
+        return new MyViewHolder(productCardView);
     }
 
     @Override
@@ -71,9 +74,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         TextView textViewName = holder.productName;
         TextView textViewVersion = holder.productPrice;
+        ImageView thumImage = holder.productThumbImage;
 
         textViewName.setText(mProductDetdailsDataSet.get(listPosition).getProductName());
         textViewVersion.setText(mProductDetdailsDataSet.get(listPosition).getPrice());
+        Picasso.with(mActivity).load(mProductDetdailsDataSet.get(listPosition).getProductImage()).into(thumImage);
     }
 
     @Override
