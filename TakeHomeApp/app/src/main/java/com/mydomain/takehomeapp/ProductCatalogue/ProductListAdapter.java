@@ -36,19 +36,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             this.productName = itemView.findViewById(R.id.product_name);
             this.productPrice = itemView.findViewById(R.id.product_price);
             this.productThumbImage = itemView.findViewById(R.id.product_list_thumb_image);
-            //if(null != itemView) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int index = getAdapterPosition();
-                        Log.i("ProductAdapter", "Selected Product: " + mProductDetdailsDataSet.get(index).getProductName());
-                        ProductDetails details = mProductDetdailsDataSet.get(index);
-                        Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
-                        intent.putExtra("extra_product_details", details);
-                        mActivity.startActivity(intent);
-                    }
-                });
-           // }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int index = getAdapterPosition();
+                    Log.i("ProductAdapter", "Selected Product: " + mProductDetdailsDataSet.get(index).getProductName());
+                    ProductDetails details = mProductDetdailsDataSet.get(index);
+                    Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
+                    mActivity.startActivity(intent);
+                }
+            });
+
         }
     }
 

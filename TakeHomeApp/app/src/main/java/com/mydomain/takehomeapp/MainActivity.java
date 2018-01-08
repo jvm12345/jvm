@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 details.setPageNumber(pageNum);
                 mProductDetailsList.add(details);
             }
+            //TODO
+            HomeApplication.getInstance().setProductList(mProductDetailsList);
         }
     }
 }
