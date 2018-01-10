@@ -1,0 +1,1 @@
+This app comprises of two screens. Main screen shows list of products fetched from backend. Second screen named "Product Details" is launched when any one of the items is selected. Product detail screen shows details about the seleced product. It also supports swiping functionality (like gmail) to swipe/navigate left and right.
