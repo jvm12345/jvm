@@ -2,9 +2,7 @@ package com.mydomain.takehomeapp;
 
 import android.app.Application;
 
-import com.mydomain.takehomeapp.services.apihelper.ProductDetails;
-
-import java.util.List;
+import io.realm.Realm;
 
 /*
  * Created by jmonani on 1/7/2018.
@@ -13,8 +11,6 @@ import java.util.List;
 public class HomeApplication extends Application {
 
     private static HomeApplication mInstance;
-    private List<ProductDetails> mProductDetailsList;
-
     public static HomeApplication getInstance() {
         return mInstance;
     }
@@ -30,16 +26,6 @@ public class HomeApplication extends Application {
      * initialize application level data
      */
     private void initializeInstance() {
-        //TODO
+        Realm.init(this);
     }
-
-    // TODO add persistence solution
-    public void setProductList(List<ProductDetails> list) {
-        this.mProductDetailsList = list;
-    }
-
-    public List<ProductDetails> getProductList() {
-        return mProductDetailsList;
-    }
-
 }

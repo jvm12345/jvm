@@ -5,12 +5,8 @@ package com.mydomain.takehomeapp.services;
  * Created by jmonani on 12/21/17.
  */
 
-import android.util.Log;
-
 import com.mydomain.takehomeapp.services.apihelper.ProductDetailResponse;
 import com.mydomain.takehomeapp.utility.AsyncCallbackInf;
-
-import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,7 +28,7 @@ public class ProductAPIService {
      */
     public static Retrofit getRestAdapter() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
@@ -43,23 +39,6 @@ public class ProductAPIService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return restAdapter;
-    }
-
-    public ProductDetailResponse getProductList() {
-
-        ProductApiInterface productApiInterface =
-                getRestAdapter().create(ProductApiInterface.class);
-
-        ProductDetailResponse productDetailResponse = null;
-        try {
-            Call<ProductDetailResponse> call = productApiInterface.getProductList(API_KEY, "1", "1");
-            productDetailResponse = call.execute().body();
-            Log.i("Retrofit-Product-Api", "Product Details Response: " + productApiInterface.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return productDetailResponse;
     }
 
     public void getProductListAsync(int page, final AsyncCallbackInf callbackInf) {

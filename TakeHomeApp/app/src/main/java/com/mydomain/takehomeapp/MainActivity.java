@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.mydomain.takehomeapp.ProductCatalogue.ProductListAdapter;
+import com.mydomain.takehomeapp.database.RealmDatabase;
+import com.mydomain.takehomeapp.database.productdb.ProductDBModel;
+import com.mydomain.takehomeapp.database.productdb.ProductDBWrapper;
 import com.mydomain.takehomeapp.services.ProductAPIService;
 import com.mydomain.takehomeapp.services.apihelper.BaseApiResponse;
 import com.mydomain.takehomeapp.services.apihelper.ProductDetailResponse;
@@ -25,6 +28,8 @@ import com.mydomain.takehomeapp.utility.ScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class MainActivity extends AppCompatActivity {
 
     private List<ProductDetails> mProductDetailsList;
@@ -33,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mProductListRecyclerView;
     private ProductListAdapter mProductListAdapter;
     private TextView mEmptyListMessage;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mProductDetailsList = new ArrayList<>();
+        Realm realm = RealmDatabase.getInstance().getRealm();
+        // get list fresh from server
+        new ProductDBWrapper().deleteAllProductRecords(realm);
+        realm.close();
         setContentView(R.layout.activity_main);
         mProductListRecyclerView = findViewById(R.id.product_recycler_view);
         mEmptyListMessage = findViewById(R.id.product_list_empty_message);
@@ -62,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
             fetchProductList(1);
     }
 
-    public void onResume() {
-        super.onResume();
-    }
-
-
     public void fetchProductList(int page) {
 
         new ProductAPIService().getProductListAsync(page, new AsyncCallbackInf() {
@@ -75,34 +80,59 @@ public class MainActivity extends AppCompatActivity {
                 ProductDetailResponse detailResponse = (ProductDetailResponse) response;
                 if(null != detailResponse && null != detailResponse.status && SUCCESS_RESPONSE == detailResponse.status) {
                     setProductList(detailResponse);
-                    Log.i("MainActivity", "fetchProductList: List of products: " + mProductDetailsList.size());
                     mProductListAdapter.setData((ArrayList<ProductDetails>) mProductDetailsList);
                     mProductListAdapter.notifyDataSetChanged();
                     mEmptyListMessage.setVisibility(View.INVISIBLE);
                     mProductListRecyclerView.setVisibility(View.VISIBLE);
                 } else {
                     // error scenario
-                    assert detailResponse != null;
-                    Log.e("MainActivity", "Error in fetching product list:" + detailResponse.error);
-                    mEmptyListMessage.setText(detailResponse.error);
+                    String message = "Error fetching Product List:: ";
+                    if(null != detailResponse && null != detailResponse.error)
+                        message = message.concat(detailResponse.error);
+                    Log.e(TAG, "Error in fetching product list:" + message);
+                    mEmptyListMessage.setText(message);
                     mEmptyListMessage.setVisibility(View.VISIBLE);
                     mProductListRecyclerView.setVisibility(View.INVISIBLE);
-                    Snackbar.make(findViewById(android.R.id.content), detailResponse.error, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
                 }
             }
         });
     }
 
+    /*
+     * parsing response and setting product list
+     */
     private void setProductList(ProductDetailResponse response) {
         int pageNum = response.pageNumber;
         List<ProductDetails> products = response.products;
+
         if(null != products) {
+            Realm realm = RealmDatabase.getInstance().getRealm();
             for (ProductDetails details: products) {
                 details.setPageNumber(pageNum);
-                mProductDetailsList.add(details);
+                if(updateProductDB(realm, details)) {
+                    mProductDetailsList.add(details);
+                }
             }
-            //TODO
-            HomeApplication.getInstance().setProductList(mProductDetailsList);
+            realm.close();
         }
+    }
+
+    /*
+     * update db with product detail entry with unique product id
+     */
+    private boolean updateProductDB(Realm realm, ProductDetails details) {
+            ProductDBModel model = new ProductDBModel();
+            model.setProductId(details.getProductId());
+            model.setProductName(details.getProductName());
+            model.setLongDescription(details.getLongDescription());
+            model.setShortDescription(details.getShortDescription());
+            model.setInStock(details.isInStock());
+            model.setPageNumber(details.getPageNumber());
+            model.setPrice(details.getPrice());
+            model.setProductImage(details.getProductImage());
+            model.setReviewRating(details.getReviewRating());
+            model.setReviewCount(details.getReviewCount());
+            return new ProductDBWrapper().insertProductDetail(realm, model);
     }
 }

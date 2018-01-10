@@ -2,7 +2,6 @@ package com.mydomain.takehomeapp.utility;
 /*
  * Description: Scroll listener for lazy loading
  * Created by jmonani on 12/21/17.
- *
  */
 
 import android.support.v7.widget.LinearLayoutManager;

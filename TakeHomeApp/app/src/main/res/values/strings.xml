@@ -2,7 +2,7 @@
     <string name="app_name">TakeHomeApp</string>
     <string name="product_price_label">Product Price</string>
     <string name="product_name_label">Product Name</string>
-    <string name="product_list_messge_text">WalmartLabs Test Api App!  Product List will Show up here!</string>
+    <string name="product_list_messge_text">WalmartLabs Test Api App!\n\nProduct List will Show up here!</string>
     <string name="product_detail_name_label">Product Name</string>
     <string name="price_detail_price_label">Price</string>
     <string name="product_detail_desc_label">Description</string>

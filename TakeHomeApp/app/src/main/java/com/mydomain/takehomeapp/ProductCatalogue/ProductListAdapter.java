@@ -1,11 +1,12 @@
 package com.mydomain.takehomeapp.ProductCatalogue;
 
 /*
+ * Created by jmonani on 1/7/2018.
  * product list adapter for list of product
  */
+
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mydomain.takehomeapp.MainActivity;
-import com.mydomain.takehomeapp.ProductDetailsActivity;
 import com.mydomain.takehomeapp.R;
 import com.mydomain.takehomeapp.services.apihelper.ProductDetails;
 import com.squareup.picasso.Picasso;
@@ -40,9 +40,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 @Override
                 public void onClick(View view) {
                     int index = getAdapterPosition();
-                    Log.i("ProductAdapter", "Selected Product: " + mProductDetdailsDataSet.get(index).getProductName());
                     ProductDetails details = mProductDetdailsDataSet.get(index);
                     Intent intent = new Intent(mActivity, ProductDetailsActivity.class);
+                    intent.putExtra("extra_product_detail_index", index);
                     mActivity.startActivity(intent);
                 }
             });

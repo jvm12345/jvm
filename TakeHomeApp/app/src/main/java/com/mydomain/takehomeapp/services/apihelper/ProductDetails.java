@@ -9,16 +9,16 @@ import android.os.Parcelable;
 
 public class ProductDetails implements Parcelable {
 
-    public String productName; // "VIZIO Class Full-Array LED Smart TV",
-    public String price;
-    public String shortDescription;
-    public String longDescription;
-    public String productId; // "31e1cb21-5504-4f02-885b-8f267131a93f",
-    public String productImage; //"http://someurl/0084522601078_A",
-    public String reviewRating;  //0.0
-    public Integer reviewCount;   //0
-    public Boolean inStock; //true
-    public Integer pageNumber;
+    private String productName; // "VIZIO Class Full-Array LED Smart TV",
+    private String price;
+    private String shortDescription;
+    private String longDescription;
+    private String productId; // "31e1cb21-5504-4f02-885b-8f267131a93f",
+    private String productImage; //"http://someurl/0084522601078_A",
+    private String reviewRating;  //0.0
+    private Integer reviewCount;   //0
+    private Boolean inStock; //true
+    private Integer pageNumber;
 
     @Override
     public int describeContents() {
