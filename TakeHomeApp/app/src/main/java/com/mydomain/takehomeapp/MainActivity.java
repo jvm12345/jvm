@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mProductDetailsList = new ArrayList<>();
         Realm realm = RealmDatabase.getInstance().getRealm();
+        setTitle("Product List Screen");
         // get list fresh from server
         new ProductDBWrapper().deleteAllProductRecords(realm);
         realm.close();

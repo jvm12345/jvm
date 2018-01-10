@@ -14,14 +14,17 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity"
-                    android:configChanges="orientation|screenSize|keyboardHidden">
+                    android:configChanges="orientation|screenSize|keyboardHidden"
+                    android:label="@string/product_list_screen"
+                    >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ProductCatalogue.ProductDetailsActivity">
+        <activity android:name=".ProductCatalogue.ProductDetailsActivity"
+                    android:label="@string/product_detail_screen">
         </activity>
     </application>
 

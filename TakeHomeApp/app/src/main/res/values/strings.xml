@@ -8,4 +8,6 @@
     <string name="product_detail_desc_label">Description</string>
     <string name="product_detail_rating_label">Rating</string>
     <string name="product_detail_image_content_desc">This is product picture</string>
+    <string name="product_list_screen">Product List Screen</string>
+    <string name="product_detail_screen">Product Details Screen</string>
 </resources>
