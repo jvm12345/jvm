@@ -31,10 +31,11 @@
                 >
                 <ImageView
                     android:id="@+id/product_list_thumb_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_launcher_background"/>
+                    android:src="@mipmap/image_placeholder"
+                    />
 
             </LinearLayout>
             <LinearLayout

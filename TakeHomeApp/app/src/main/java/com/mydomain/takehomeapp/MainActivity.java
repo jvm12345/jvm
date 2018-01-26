@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -45,11 +46,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mProductDetailsList = new ArrayList<>();
         Realm realm = RealmDatabase.getInstance().getRealm();
-        setTitle("Product List Screen");
         // get list fresh from server
         new ProductDBWrapper().deleteAllProductRecords(realm);
         realm.close();
         setContentView(R.layout.activity_main);
+        //tool bar setup
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        if(null != toolbar) {
+            setSupportActionBar(toolbar);
+            if(null != getSupportActionBar()) {
+                getSupportActionBar().setHomeButtonEnabled(true);
+                //getSupportActionBar().setDisplayShowTitleEnabled(false);
+                setTitle(getString(R.string.product_list_screen));
+            }
+        }
+
         mProductListRecyclerView = findViewById(R.id.product_recycler_view);
         mEmptyListMessage = findViewById(R.id.product_list_empty_message);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

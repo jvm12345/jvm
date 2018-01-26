@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
             mCurrentPage = getIntent().getIntExtra("extra_product_detail_index", 0);
         }
         setContentView(R.layout.product_details_activity);
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        if(null != toolbar) {
+            setSupportActionBar(toolbar);
+            if(null != getSupportActionBar()) {
+                getSupportActionBar().setHomeButtonEnabled(true);
+                setTitle(getString(R.string.product_detail_screen));
+            }
+            toolbar.setNavigationIcon(R.mipmap.ic_back_navigation);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
         mViewPager = findViewById(R.id.product_pager);
         mPageAdapter = new MyAdapter(this);
         mViewPager.setAdapter(mPageAdapter);
