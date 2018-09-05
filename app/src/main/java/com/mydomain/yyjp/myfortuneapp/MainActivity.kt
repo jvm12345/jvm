@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         isDone.set(false)
         countDownTimer = object  : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                Log.d(TAG, "sec remaining: " + millisUntilFinished / 1000)
             }
             override fun onFinish() {
                 if(isDone.compareAndSet(true, false)) {
@@ -81,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     private val fortuneListUpdate: Observer<List<String>> = Observer { fortuneItems ->
         Log.d(TAG, "onChanged: fortunes: = [$fortuneItems]")
         countDownTimer?.let {
-            Log.d(TAG, "Cancelling timer")
             countDownTimer!!.cancel()
             countDownTimer = null
         }
@@ -105,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun updateItemList(itemList : List<String> ) {
+    private fun updateItemList(itemList : List<String> ) {
         adapter.update(itemList)
         this.loadingView.visibility = View.GONE
         this.recyclerView.visibility = View.VISIBLE

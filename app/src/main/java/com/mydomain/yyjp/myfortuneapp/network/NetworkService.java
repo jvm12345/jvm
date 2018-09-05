@@ -19,7 +19,6 @@ public class NetworkService {
           .baseUrl("http://api.acme.international/")
           .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
           .addConverterFactory(GsonConverterFactory.create())
-          //.client(getHttpClient())
           .build();
     }
     return retrofit;

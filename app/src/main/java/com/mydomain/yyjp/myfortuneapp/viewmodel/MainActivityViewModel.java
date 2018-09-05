@@ -20,13 +20,12 @@ import retrofit2.Response;
 public class MainActivityViewModel extends ViewModel {
 
     private static final String TAG = ViewModel.class.getSimpleName();
-    private Context applicationContex;
     private MutableLiveData<List<String>> itemList = new MutableLiveData<>();
     private SingleLiveEvent<String> errorStatus = new SingleLiveEvent<>();
 
     public MainActivityViewModel(Context context) {
         Log.d(TAG, "MainActivityViewModel");
-        this.applicationContex = context;
+        Context applicationContex = context;
         initialize();
     }
 
@@ -49,10 +48,11 @@ public class MainActivityViewModel extends ViewModel {
             public void onResponse(Call<FortuneResponse> call, Response<FortuneResponse> response) {
                 Log.d(TAG, "Response: " + response);
                 if(response != null && response.isSuccessful()) {
-                    Log.d(TAG, "Success Response: " + response.body().toString());
                     FortuneResponse fortuneResponse = response.body();
-                    Log.d(TAG, "fortunes: " + fortuneResponse.getItems().size());
-                    updateList(fortuneResponse.getItems());
+                    if(fortuneResponse.getItems() != null)
+                        updateList(fortuneResponse.getItems());
+                    else
+                        errorStatus.postValue("Empty Server Response");
                 } else {
                     Log.d(TAG, "Response Error: " + response.message());
                     errorStatus.postValue(response.message());
