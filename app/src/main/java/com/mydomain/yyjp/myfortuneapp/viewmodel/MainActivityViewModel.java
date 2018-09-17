@@ -74,4 +74,13 @@ public class MainActivityViewModel extends ViewModel {
     public SingleLiveEvent<String> getErrorStatus() {
         return errorStatus;
     }
+
+    @Override
+    public void onCleared() {
+        Log.d(TAG, "onCleared");
+        if(itemList.getValue() != null)
+            itemList.getValue().clear();
+        itemList.setValue(null);
+        errorStatus.setValue(null);
+    }
 }
